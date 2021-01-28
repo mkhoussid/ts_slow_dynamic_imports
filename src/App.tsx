@@ -1,12 +1,18 @@
 import React from 'react';
-import MySuspense from './MySuspense';
-import MySuspense2 from './MySuspense2';
+
+type TSuspense = {
+	iconName: string;
+};
+const MySuspense = React.memo(({ iconName }: TSuspense) => {
+	const Component = React.lazy(() => import(`@material-ui/icons/${iconName}.js`));
+
+	return (
+		<React.Suspense fallback={<div />}>
+			<Component />
+		</React.Suspense>
+	);
+});
 
 export default function App() {
-	return (
-		<div>
-			<MySuspense iconName={'Done'} />
-			<MySuspense2 iconName={'DoneAll'} />
-		</div>
-	);
+	return <MySuspense iconName={'Done'} />;
 }
